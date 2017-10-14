@@ -1,0 +1,10 @@
+html
+  head
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+  body
+    .container
+      nav.navbar.navbar-light.bg-faded
+        a.navbar-brand(href="/pledges?token=" + token) Pledges
+        a.navbar-brand(href="/schools?token=" + token) Schools
+      center
+        block content

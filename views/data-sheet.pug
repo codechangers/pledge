@@ -1,0 +1,15 @@
+extends base.pug
+block content
+  h1 #{header}
+  table.table.table-bordered.table-hover
+    thead.thead
+      tr
+        each item in fields
+          th= item.field
+      tbody
+      each item in data
+        tr
+          each val in item
+            td= val
+  a(href='/' + header.toLowerCase() + '/export?token=' + token).btn.btn-primary Export CSV
+  block form

@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "dev_user",
+    "password": "dev_user_password",
+    "database": "pledge_dev",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "pledge_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "pledge_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

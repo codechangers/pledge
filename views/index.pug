@@ -1,0 +1,7 @@
+extends base.pug
+block content
+  form(action="/login", method="get")
+    .form-group
+      label(for="credentials") Credentials:
+      input(name="credentials", placeholder="credentials", type="password").form-control
+    button.btn.btn-primary(type="submit") Enter

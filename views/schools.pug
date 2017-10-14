@@ -1,0 +1,10 @@
+extends data-sheet.pug
+block form
+  h3 Add School
+  form(action="/schools", method="post")
+    .form-group
+      label(for="name") Name:
+      input(name="name", placeholder="School name").form-control
+    .form-group
+      input(value=token, name="token", type="hidden").form-control
+    button.btn.btn-primary(type="submit") Enter
