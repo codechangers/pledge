@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 
 router.get('/login', (req, res, next) => {
   if (req.query && validator.equals(req.query.credentials, process.env.ADMIN_CREDENTIALS)) {
-    const token = jwt.sign({ user: 'admin' }, process.env.SECRET);
+    const token = jwt.sign({ user: 'admin' }, process.env.SECRET, { expiresIn: '1h' });
     res.redirect(`/pledges?token=${token}`);
     return;
   }
