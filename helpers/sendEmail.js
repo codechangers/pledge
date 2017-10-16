@@ -1,6 +1,8 @@
 const nodemailer = require('nodemailer');
 
-module.exports = ({ email, guardianEmail }) => {
+module.exports = ({
+  firstName, lastName, email, guardianEmail,
+}) => {
   const transporter = nodemailer.createTransport({
     host: 'email-smtp.us-west-2.amazonaws.com',
     port: 587,
@@ -15,7 +17,7 @@ module.exports = ({ email, guardianEmail }) => {
     to: [email, guardianEmail].filter(Boolean),
     subject: 'Test',
     text: 'Plaintext version of the message',
-    html: '<p>HTML version of the message</p>',
+    html: `<p>Thanks for pledgeing ${firstName} ${lastName} </p>`,
   };
   return transporter.sendMail(message);
 };

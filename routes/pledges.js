@@ -1,5 +1,6 @@
 const express = require('express');
 const validator = require('validator');
+const fs = require('fs');
 const modelToCsv = require('../helpers/modelToCsv');
 const sendEmail = require('../helpers/sendEmail');
 const camel = require('camelcase');
@@ -48,7 +49,12 @@ router.post('/', async (req, res) => {
     }
   });
   pledge.create(values).then(() => res.status(200).send())
-    .then(() => sendEmail({ email: values.email, guardianEmail: values.guardianEmail }))
+    .then(() => sendEmail({
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      guardianEmail: values.guardianEmail,
+    }))
     .catch(e => res.status(500).send(e));
 });
 
@@ -70,6 +76,14 @@ router.get(
         return next(err);
       }
       res.download('file.csv');
+      fs.stat('file.csv', error => {
+        if (error) {
+          return next(err);
+        }
+        fs.unlink('file.csv');
+        // eslint-disable-next-line
+        return;
+      });
     });
   },
 );
