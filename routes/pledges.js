@@ -49,12 +49,12 @@ router.post('/', async (req, res) => {
     }
   });
   pledge.create(values).then(() => res.status(200).send())
-    .then(() => sendEmail({
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-      guardianEmail: values.guardianEmail,
-    }))
+  // eslint-disable-next-line
+    .then(() => {
+      if (values.email || values.guardianEmail) {
+        return sendEmail(Object.assign({}, values));
+      }
+    })
     .catch(e => res.status(500).send(e));
 });
 
