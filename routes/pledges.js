@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
     }
   });
   pledge.create(values).then(() => res.status(200).send())
-  // eslint-disable-next-line
+    // eslint-disable-next-line
     .then(() => {
       if (values.email || values.guardianEmail) {
         return sendEmail(Object.assign({}, values));
