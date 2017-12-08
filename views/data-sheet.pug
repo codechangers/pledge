@@ -9,8 +9,6 @@ block content
       tbody
         each item in data
           tr
-            td
-              a(href="/" + header.toLowerCase() + "/" + item.id + "?token=" + token) #{item.id}
             each val in item
               td= val
   a(href="/" + header.toLowerCase() + "/export/all?token=" + token).btn.btn-primary Export CSV

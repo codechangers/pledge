@@ -83,7 +83,6 @@ router.get(
     if (req.xhr) {
       res.json(data);
     } else {
-      console.log(pledge.rawAttributes);
       res.render('item', {
         data,
         header: `Pledge: ${id}`,

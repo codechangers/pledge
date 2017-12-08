@@ -83,7 +83,7 @@ router.post(
 );
 
 router.get(
-  '/export',
+  '/export/all',
   jwt({
     secret: process.env.SECRET,
     getToken(req) {
