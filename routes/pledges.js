@@ -59,7 +59,43 @@ router.post('/', async (req, res) => {
 });
 
 router.get(
-  '/export',
+  '/:id',
+  jwt({
+    secret: process.env.SECRET,
+    getToken(req) {
+      if (req.query && req.query.token) {
+        return req.query.token;
+      }
+      return null;
+    },
+  }),
+  // eslint-disable-next-line
+  async (req, res, next) => {
+    if (!req.params.id) {
+      const err = new Error('Item w/ id not found');
+      err.status = 404;
+      return next(err);
+    }
+    const { id } = req.params;
+    const data = await pledge.findById(id, {
+      raw: true,
+    });
+    if (req.xhr) {
+      res.json(data);
+    } else {
+      console.log(pledge.rawAttributes);
+      res.render('item', {
+        data,
+        header: `Pledge: ${id}`,
+        token: req.query.token,
+        fields: pledge.rawAttributes,
+      });
+    }
+  },
+);
+
+router.get(
+  '/export/all',
   jwt({
     secret: process.env.SECRET,
     getToken(req) {

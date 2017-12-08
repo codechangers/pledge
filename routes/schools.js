@@ -29,6 +29,41 @@ router.get(
   },
 );
 
+router.get(
+  '/:id',
+  jwt({
+    secret: process.env.SECRET,
+    getToken(req) {
+      if (req.query && req.query.token) {
+        return req.query.token;
+      }
+      return null;
+    },
+  }),
+  // eslint-disable-next-line
+  async (req, res, next) => {
+    if (!req.params.id) {
+      const err = new Error('Item w/ id not found');
+      err.status = 404;
+      return next(err);
+    }
+    const { id } = req.params;
+    const data = await school.findById(id, {
+      raw: true,
+    });
+    if (req.xhr) {
+      res.json(data);
+    } else {
+      res.render('item', {
+        data,
+        header: `School: ${id}`,
+        token: req.query.token,
+        fields: school.rawAttributes,
+      });
+    }
+  },
+);
+
 router.post(
   '/',
   jwt({
