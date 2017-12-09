@@ -31,26 +31,17 @@ router.get(
 
 router.get(
   '/:id',
-  jwt({
-    secret: process.env.SECRET,
-    getToken(req) {
-      if (req.query && req.query.token) {
-        return req.query.token;
-      }
-      return null;
-    },
-  }),
   // eslint-disable-next-line
   async (req, res, next) => {
-    if (!req.params.id) {
-      const err = new Error('Item w/ id not found');
-      err.status = 404;
-      return next(err);
-    }
     const { id } = req.params;
     const data = await school.findById(id, {
       raw: true,
     });
+    if (!data) {
+      const err = new Error('Item w/ id not found');
+      err.status = 404;
+      return next(err);
+    }
     if (req.xhr) {
       res.json(data);
     } else {
@@ -76,9 +67,16 @@ router.post(
     },
   }),
   (req, res) => {
-    school.create({ name: req.body.name }).then(() => {
-      res.redirect(`/schools?token=${req.body.token}`);
-    });
+    if (req.body.id) {
+      school.update({ name: req.body.name }, { where: { id: req.body.id } })
+        .then(() => {
+          res.redirect(`/schools?token=${req.body.token}`);
+        });
+    } else {
+      school.create({ name: req.body.name }).then(() => {
+        res.redirect(`/schools?token=${req.body.token}`);
+      });
+    }
   },
 );
 

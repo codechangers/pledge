@@ -4,7 +4,9 @@ block form
   form(action="/schools", method="post")
     .form-group
       label(for="name") Name:
-      input(name="name", placeholder="School name").form-control
-    .form-group
+      input(id="name", name="name", placeholder="School name").form-control
       input(value=token, name="token", type="hidden").form-control
+      input(id="id", name="id", type="hidden").form-control
     button.btn.btn-primary(type="submit") Enter
+
+  script(src="editSchool.js")
