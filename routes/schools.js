@@ -42,16 +42,7 @@ router.get(
       err.status = 404;
       return next(err);
     }
-    if (req.xhr) {
-      res.json(data);
-    } else {
-      res.render('item', {
-        data,
-        header: `School: ${id}`,
-        token: req.query.token,
-        fields: school.rawAttributes,
-      });
-    }
+    return res.json(data);
   },
 );
 
